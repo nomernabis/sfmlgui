@@ -13,6 +13,7 @@ namespace gui{
     class Utils {
     public:
         static sf::Vector2f getCenterOf(sf::RenderWindow&);
+        static float getBottomOf(sf::RenderTarget&);
     };
 }
 

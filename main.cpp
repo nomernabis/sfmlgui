@@ -5,7 +5,7 @@
 
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(640, 320), "XEP GOVNO");
+    sf::RenderWindow window(sf::VideoMode(960, 640), "XEP GOVNO");
 
     gui::Container container;
     container.setBackgroundColor(sf::Color::Red);

@@ -54,10 +54,11 @@ void gui::Container::add(Node* child) {
     sf::Vector2f size = rect.getSize();
     resize();
     float diffY = rect.getSize().y - size.y;
-
-    setPosition(getPosition().x, getPosition().y - diffY / 2);
+    float diffX = rect.getSize().x - size.x;
+    setPosition(getPosition().x - diffX / 2, getPosition().y - diffY / 2);
     arrangeChildren();
 }
+
 
 void gui::Container::resize() {
     float height = 0, width = 0;

@@ -10,3 +10,7 @@ sf::Vector2f gui::Utils::getCenterOf(sf::RenderWindow& window) {
     center.y = window.getSize().y / 2;
     return center;
 }
+
+float gui::Utils::getBottomOf(sf::RenderTarget& window) {
+    return window.getSize().y;
+}

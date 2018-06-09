@@ -33,7 +33,6 @@ public:
     virtual void setRelativePosition(float x, float y);
     sf::RectangleShape getRect();
     sf::Vector2f getCenter();
-
 };
 
 
