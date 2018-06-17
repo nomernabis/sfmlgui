@@ -13,19 +13,23 @@ namespace gui
 {
 
 class Container: public Node{
-    std::vector<Node*> children;
-    sf::RectangleShape rect;
-    void arrangeChildren();
 public:
+    enum class Alignment{
+        TOP, DOWN, LEFT, RIGHT, CENTER, BOTTOM
+    };
+    enum class SizeMode{
+        FILL_PARENT,
+        WRAP_CONTENT,
+        FIXED
+    };
+
     Container() = default;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     virtual float getHeight() const;
     virtual float getWidth() const;
     void add(Node*);
-    void arrangeSelf();
     void setSize(sf::Vector2f);
-    void setCenter(sf::Vector2f);
-    void setCenter(float, float);
+    void setSize(float, float);
     void setBackgroundColor(const sf::Color& color);
     void resize();
     virtual sf::Vector2f getPosition();
@@ -33,6 +37,29 @@ public:
     virtual void setRelativePosition(float x, float y);
     sf::RectangleShape getRect();
     sf::Vector2f getCenter();
+    void setAlignment(Alignment vAlignment, Alignment hAlignment);
+    void setWindow(sf::RenderWindow* window);
+    void setSizeMode(SizeMode mode);
+    void setCenterVertical(bool);
+    void setCenterHorizontal(bool);
+    void setCenterInParent(bool);
+    void setBottomInparent(bool);
+    void setTopInParent(bool);
+    void invalidate();
+private:
+    sf::RenderWindow* window;
+    Alignment vAlignment = Alignment::TOP;
+    Alignment hAlignment = Alignment::LEFT;
+    SizeMode sizeMode = SizeMode::WRAP_CONTENT;
+    std::vector<Node*> children;
+    sf::RectangleShape rect;
+    //relative to parent
+    bool isCenterVertical = false;
+    bool isCenterHorizontal = false;
+    bool isTopInParent = false;
+    bool isBottomInParent = false;
+
+    void calculateChildrenPositions();
 };
 
 

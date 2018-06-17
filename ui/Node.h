@@ -10,7 +10,12 @@
 
 class Node: public sf::Drawable{
     Node* parent;
+    float marginTop = 0, marginBottom = 0;
 public:
+    void setMarginTop(float margin);
+    void setMarginBottom(float margin);
+    float getMarginTop() const;
+    float getMarginBottom() const;
     Node* getParentNode() const;
     void setParentNode(Node* parent);
     virtual float getWidth() const = 0;

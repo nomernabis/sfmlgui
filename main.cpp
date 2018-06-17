@@ -9,13 +9,48 @@ int main() {
 
     gui::Container container;
     container.setBackgroundColor(sf::Color::Red);
-    container.setCenter(gui::Utils::getCenterOf(window));
+    container.setWindow(&window);
+
+    container.setPosition(100, 100);
+    container.setSizeMode(gui::Container::SizeMode::WRAP_CONTENT);
+
+
+    gui::Container title;
+    title.setBackgroundColor(sf::Color::Black);
+    title.setSize(100, 50);
+    title.setMarginBottom(30);
+
+    container.add(&title);
 
     gui::Container child;
+    child.setSize({100, 100});
     child.setBackgroundColor(sf::Color::Green);
-    child.setSize({200, 100});
 
     container.add(&child);
+
+    gui::Container child2;
+    child2.setSize({100, 100});
+    child2.setBackgroundColor(sf::Color::Yellow);
+    container.add(&child2);
+
+    container.setAlignment(gui::Container::Alignment::CENTER, gui::Container::Alignment::CENTER);
+    container.setCenterHorizontal(true);
+    container.setBottomInparent(true);
+
+    sf::RectangleShape line({window.getSize().x, 1});
+    line.setFillColor(sf::Color::Black);
+    line.setPosition(0,window.getSize().y / 2);
+
+
+    sf::RectangleShape vLine({1, window.getSize().y});
+    vLine.setFillColor(sf::Color::Black);
+    vLine.setPosition(window.getSize().x / 2, 0);
+
+  /*  gui::Container child3;
+    child3.setSize({100, 150});
+    child3.setBackgroundColor(sf::Color::Black);
+    container.add(&child3);*/
+
 
     while (window.isOpen()){
         sf::Event event;
@@ -26,6 +61,9 @@ int main() {
         }
         window.clear(sf::Color::White);
         window.draw(container);
+        window.draw(line);
+        window.draw(vLine);
+
         window.display();
     }
 
