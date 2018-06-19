@@ -2,6 +2,8 @@
 #include <SFML/Graphics.hpp>
 #include "ui/Container.h"
 #include "ui/Utils.h"
+#include "ui/elements/TextNode.h"
+#include "ui/elements/Button.h"
 
 
 int main() {
@@ -13,6 +15,12 @@ int main() {
 
     container.setPosition(100, 100);
     container.setSizeMode(gui::Container::SizeMode::WRAP_CONTENT);
+
+    TextNode textNode;
+    textNode.setText("TES VI");
+    textNode.setMarginBottom(40);
+
+    container.add(&textNode);
 
 
     gui::Container title;
@@ -46,6 +54,9 @@ int main() {
     vLine.setFillColor(sf::Color::Black);
     vLine.setPosition(window.getSize().x / 2, 0);
 
+    Button button("Button");
+    button.setPosition(100, 100);
+
   /*  gui::Container child3;
     child3.setSize({100, 150});
     child3.setBackgroundColor(sf::Color::Black);
@@ -63,7 +74,7 @@ int main() {
         window.draw(container);
         window.draw(line);
         window.draw(vLine);
-
+        window.draw(button);
         window.display();
     }
 
