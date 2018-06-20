@@ -36,7 +36,7 @@ void TextNode::setPosition(float x, float y) {
 }
 
 sf::Vector2f TextNode::getPosition() {
-    return text.getPosition();
+    return text.getPosition() ;
 }
 
 void TextNode::setRelativePosition(float x, float y) {
@@ -61,4 +61,12 @@ void TextNode::setColor(sf::Color &c) {
 
 void TextNode::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     target.draw(text, states);
+}
+
+void TextNode::setPosition(sf::Vector2f pos) {
+    text.setPosition(pos);
+}
+
+sf::Vector2f TextNode::getLocalBounds() {
+    return {text.getLocalBounds().left, text.getLocalBounds().top};
 }

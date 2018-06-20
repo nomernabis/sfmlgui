@@ -41,7 +41,8 @@ int main() {
     child2.setBackgroundColor(sf::Color::Yellow);
     container.add(&child2);
 
-    container.setAlignment(gui::Container::Alignment::CENTER, gui::Container::Alignment::CENTER);
+    container.setAlignment(gui::Container::Alignment::CENTER,
+                           gui::Container::Alignment::CENTER);
     container.setCenterHorizontal(true);
     container.setBottomInparent(true);
 
@@ -56,6 +57,9 @@ int main() {
 
     Button button("Button");
     button.setPosition(100, 100);
+    button.setPadding(10);
+    button.setText("XEPPSPDSDA");
+
 
   /*  gui::Container child3;
     child3.setSize({100, 150});

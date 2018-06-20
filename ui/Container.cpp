@@ -178,7 +178,6 @@ void gui::Container::resize() {
 }
 
 void gui::Container::invalidate() {
-
 }
 
 void gui::Container::setSize(sf::Vector2f size) {

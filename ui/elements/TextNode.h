@@ -29,6 +29,8 @@ public:
     virtual sf::Vector2f getPosition();
     virtual void setRelativePosition(float, float);
 
+    sf::Vector2f getLocalBounds();
+    void setPosition(sf::Vector2f pos);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
