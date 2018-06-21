@@ -159,7 +159,6 @@ void gui::Container::calculateChildrenPositions() {
 
 void gui::Container::resize() {
     float height = 0, width = 0;
-    int offset = 10;
     for (Node *child: children) {
         if(child->getMarginTop() != 0){
             height += child->getMarginTop();

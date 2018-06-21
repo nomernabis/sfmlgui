@@ -22,7 +22,6 @@ int main() {
 
     container.add(&textNode);
 
-
     gui::Container title;
     title.setBackgroundColor(sf::Color::Black);
     title.setSize(100, 50);
@@ -33,12 +32,13 @@ int main() {
     gui::Container child;
     child.setSize({100, 100});
     child.setBackgroundColor(sf::Color::Green);
-
+    child.setSizeMode(gui::Container::SizeMode::FIXED);
     container.add(&child);
 
     gui::Container child2;
     child2.setSize({100, 100});
     child2.setBackgroundColor(sf::Color::Yellow);
+    child2.setSizeMode(gui::Container::SizeMode::FIXED);
     container.add(&child2);
 
     container.setAlignment(gui::Container::Alignment::CENTER,
@@ -60,6 +60,10 @@ int main() {
     button.setPosition(100, 100);
     button.setPadding(10);
     button.setText("XEPPSPDSDA");
+    button.setBackgroundColor(sf::Color::Black);
+    button.setTextColor(sf::Color::White);
+
+    container.add(&button);
 
   /*  gui::Container child3;
     child3.setSize({100, 150});

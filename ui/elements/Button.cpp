@@ -4,6 +4,22 @@
 
 #include "Button.h"
 
+sf::Vector2f Button::getPosition() {
+    return rect.getPosition();
+}
+
+void Button::setRelativePosition(float x, float y) {
+    setPosition(getParentNode()->getPosition().x + x, getParentNode()->getPosition().y + y);
+}
+
+void Button::setBackgroundColor(sf::Color color) {
+    rect.setFillColor(color);
+}
+
+void Button::setTextColor(sf::Color color) {
+    textNode.setColor(color);
+}
+
 void Button::setFixedSize(bool isFixedSize) {
     this->isFixedSize = isFixedSize;
 }
