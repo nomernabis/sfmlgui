@@ -102,6 +102,21 @@ void gui::Container::add(Node *child) {
     calculateChildrenPositions();
 }
 
+void gui::Container::setPadding(float padding) {
+    setPadding(padding, padding);
+}
+
+void gui::Container::setPadding(float top_bottom, float left_right) {
+    setPadding(top_bottom, left_right, top_bottom, left_right);
+}
+
+void gui::Container::setPadding(float top, float right, float bottom, float left) {
+    paddingTop = top;
+    paddingRight = right;
+    paddingBottom = bottom;
+    paddingLeft = left;
+    resize();
+}
 
 void gui::Container::calculateChildrenPositions() {
     int padding = 10;
@@ -133,6 +148,11 @@ void gui::Container::calculateChildrenPositions() {
         for (int i = 0; i < children.size(); ++i) {
             Node *child = children.at(i);
             child->setPosition(child->getPosition().x, child->getPosition().y + yOffset);
+
+            Container* container = dynamic_cast<Container*>(child);
+            if(container != nullptr){
+                container->calculateChildrenPositions();
+            }
         }
     }
 }
@@ -148,7 +168,7 @@ void gui::Container::resize() {
             height += child->getMarginBottom();
         }
         if(child->getMarginTop() == 0 && child->getMarginBottom() == 0){
-            height += offset;
+            height += childSpacing;
         }
 
         height += child->getHeight();
@@ -156,8 +176,8 @@ void gui::Container::resize() {
             width = child->getWidth();
         }
     }
-    height += offset;
-    width += 2 * offset;
+    height += paddingBottom;
+    width += paddingLeft + paddingRight;
     if(sizeMode == SizeMode::WRAP_CONTENT){
         setSize({width, height});
     }
@@ -175,6 +195,17 @@ void gui::Container::resize() {
         setPosition(getPosition().x, window->getSize().y - rect.getSize().y);
     }
 
+    for(Node* child: children){
+        Container* container = dynamic_cast<Container*>(child);
+        if(container != nullptr){
+            container->resize();
+        }
+    }
+
+}
+
+bool gui::Container::isContainer(Node *node) {
+    return dynamic_cast<Container*>(node) != nullptr;
 }
 
 void gui::Container::invalidate() {

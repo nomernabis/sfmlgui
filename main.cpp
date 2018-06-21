@@ -45,6 +45,7 @@ int main() {
                            gui::Container::Alignment::CENTER);
     container.setCenterHorizontal(true);
     container.setBottomInparent(true);
+    container.setPadding(20, 10);
 
     sf::RectangleShape line({window.getSize().x, 1});
     line.setFillColor(sf::Color::Black);
@@ -60,12 +61,10 @@ int main() {
     button.setPadding(10);
     button.setText("XEPPSPDSDA");
 
-
   /*  gui::Container child3;
     child3.setSize({100, 150});
     child3.setBackgroundColor(sf::Color::Black);
     container.add(&child3);*/
-
 
     while (window.isOpen()){
         sf::Event event;

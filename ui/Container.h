@@ -46,6 +46,10 @@ public:
     void setBottomInparent(bool);
     void setTopInParent(bool);
     void invalidate();
+    bool isContainer(Node* node);
+    void setPadding(float padding);
+    void setPadding(float top_bottom, float left_right);
+    void setPadding(float top, float right, float bottom, float left);
 private:
     sf::RenderWindow* window;
     Alignment vAlignment = Alignment::TOP;
@@ -58,8 +62,15 @@ private:
     bool isCenterHorizontal = false;
     bool isTopInParent = false;
     bool isBottomInParent = false;
-
     void calculateChildrenPositions();
+
+    float paddingTop = 0;
+    float paddingBottom = 0;
+    float paddingLeft = 0;
+    float paddingRight = 0;
+
+    float childSpacing = 10;
+
 };
 
 

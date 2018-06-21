@@ -54,7 +54,7 @@ void TextNode::setFont(std::string fontName) {
     text.setFont(font);
 }
 
-void TextNode::setColor(sf::Color &c) {
+void TextNode::setColor(sf::Color& c) {
     color = c;
     text.setFillColor(color);
 }
