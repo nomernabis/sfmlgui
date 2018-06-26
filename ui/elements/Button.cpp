@@ -46,7 +46,8 @@ void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 void Button::setPosition(float x, float y) {
     sf::Vector2f positon{x, y};
-    textNode.setPosition(positon - textNode.getLocalBounds());
+    sf::Vector2f noPadding = positon - textNode.getLocalBounds();
+    textNode.setPosition(noPadding.x + paddingLeft, noPadding.y + paddingTop);
     rect.setPosition({x, y});
 }
 
