@@ -1,88 +1,87 @@
 //
 // Created by pavel on 04.06.18.
 //
-
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <iostream>
 #include "Container.h"
 #include "Utils.h"
 
 
-void gui::Container::setSizeMode(gui::Container::SizeMode mode) {
+void Container::setSizeMode(Container::SizeMode mode) {
     sizeMode = mode;
 }
 
-void gui::Container::setWindow(sf::RenderWindow *window) {
+void Container::setWindow(sf::RenderWindow *window) {
     this->window = window;
 }
 
-void gui::Container::setCenterVertical(bool isCV) {
+void Container::setCenterVertical(bool isCV) {
     this->isCenterVertical = isCV;
     resize();
     calculateChildrenPositions();
 }
 
-void gui::Container::setCenterHorizontal(bool isCH) {
+void Container::setCenterHorizontal(bool isCH) {
     this->isCenterHorizontal = isCH;
     resize();
     calculateChildrenPositions();
 }
 
-void gui::Container::setCenterInParent(bool isCP) {
+void Container::setCenterInParent(bool isCP) {
     isCenterHorizontal = isCP;
     isCenterVertical = isCP;
     resize();
     calculateChildrenPositions();
 }
 
-void gui::Container::setTopInParent(bool isTop) {
+void Container::setTopInParent(bool isTop) {
     this->isTopInParent = isTop;
     resize();
     calculateChildrenPositions();
 }
 
-void gui::Container::setBottomInparent(bool isBottom) {
+void Container::setBottomInparent(bool isBottom) {
     this->isBottomInParent = isBottom;
     resize();
     calculateChildrenPositions();
 }
 
-void gui::Container::setAlignment(gui::Container::Alignment hAlignment, gui::Container::Alignment vAlignment) {
+void Container::setAlignment(Container::Alignment hAlignment, Container::Alignment vAlignment) {
     this->vAlignment = vAlignment;
     this->hAlignment = hAlignment;
     resize();
     calculateChildrenPositions();
 }
 
-sf::Vector2f gui::Container::getPosition() {
+sf::Vector2f Container::getPosition() {
     return rect.getPosition();
 }
 
-void gui::Container::setRelativePosition(float x, float y) {
+void Container::setRelativePosition(float x, float y) {
     sf::Vector2f position = getParentNode()->getPosition();
     setPosition(x + position.x, y + position.y);
 }
 
-void gui::Container::setPosition(float x, float y) {
+void Container::setPosition(float x, float y) {
     rect.setPosition(x, y);
 }
 
-float gui::Container::getHeight() const {
+float Container::getHeight() const {
     return rect.getSize().y;
 }
 
-float gui::Container::getWidth() const {
+float Container::getWidth() const {
     return rect.getSize().x;
 }
 
-void gui::Container::draw(sf::RenderTarget &target, sf::RenderStates states) const {
+void Container::draw(sf::RenderTarget &target, sf::RenderStates states) const {
     target.draw(rect, states);
     for (Node *node:children) {
         node->draw(target, states);
     }
 }
 
-void gui::Container::add(Node *child) {
+void Container::add(Node *child) {
     children.push_back(child);
     child->setParentNode(this);
 
@@ -102,15 +101,15 @@ void gui::Container::add(Node *child) {
     calculateChildrenPositions();
 }
 
-void gui::Container::setPadding(float padding) {
+void Container::setPadding(float padding) {
     setPadding(padding, padding);
 }
 
-void gui::Container::setPadding(float top_bottom, float left_right) {
+void Container::setPadding(float top_bottom, float left_right) {
     setPadding(top_bottom, left_right, top_bottom, left_right);
 }
 
-void gui::Container::setPadding(float top, float right, float bottom, float left) {
+void Container::setPadding(float top, float right, float bottom, float left) {
     paddingTop = top;
     paddingRight = right;
     paddingBottom = bottom;
@@ -118,28 +117,27 @@ void gui::Container::setPadding(float top, float right, float bottom, float left
     resize();
 }
 
-void gui::Container::calculateChildrenPositions() {
-    int padding = 10;
-    int offset = padding;
+void Container::calculateChildrenPositions() {
+    int offset = 0;
 
 
     for (int i = 0; i < children.size(); ++i) {
         Node *child = children.at(i);
 
-        float x = padding;
+        float x = 0;
         if (hAlignment == Alignment::CENTER) {
             x = (getWidth() - child->getWidth()) / 2;
         }
         if(child->getMarginTop() != 0){
-            offset -= padding;
+            offset -= childSpacing;
             offset += child->getMarginBottom();
         }
         child->setRelativePosition(x, offset);
         if(child->getMarginBottom() != 0){
-            offset -= padding;
+            offset -= childSpacing;
             offset += child->getMarginBottom();
         }
-        offset += child->getHeight() + padding;
+        offset += child->getHeight() + childSpacing;
     }
 
     if (vAlignment == Alignment::CENTER) {
@@ -157,7 +155,7 @@ void gui::Container::calculateChildrenPositions() {
     }
 }
 
-void gui::Container::resize() {
+void Container::resize() {
     float height = 0, width = 0;
     for (Node *child: children) {
         if(child->getMarginTop() != 0){
@@ -182,11 +180,11 @@ void gui::Container::resize() {
     }
 
     if (isCenterVertical) {
-        sf::Vector2f windowCenter = gui::Utils::getCenterOf(window);
+        sf::Vector2f windowCenter = Utils::getCenterOf(window);
         setPosition(getPosition().x, windowCenter.y - rect.getSize().y / 2);
     }
     if (isCenterHorizontal) {
-        sf::Vector2f windowCenter = gui::Utils::getCenterOf(window);
+        sf::Vector2f windowCenter = Utils::getCenterOf(window);
         setPosition(windowCenter.x - getWidth() / 2, getPosition().y);
     }
 
@@ -203,29 +201,33 @@ void gui::Container::resize() {
 
 }
 
-bool gui::Container::isContainer(Node *node) {
+void Container::setChildSpacing(float spacing) {
+    this->childSpacing = spacing;
+}
+
+bool Container::isContainer(Node *node) {
     return dynamic_cast<Container*>(node) != nullptr;
 }
 
-void gui::Container::invalidate() {
+void Container::invalidate() {
 }
 
-void gui::Container::setSize(sf::Vector2f size) {
+void Container::setSize(sf::Vector2f size) {
     rect.setSize(size);
 }
 
-void gui::Container::setSize(float x, float y) {
+void Container::setSize(float x, float y) {
     rect.setSize({x, y});
 }
 
-sf::RectangleShape gui::Container::getRect() {
+sf::RectangleShape Container::getRect() {
     return rect;
 }
 
-sf::Vector2f gui::Container::getCenter() {
+sf::Vector2f Container::getCenter() {
     return {rect.getPosition() + rect.getSize() / 2.f};
 }
 
-void gui::Container::setBackgroundColor(const sf::Color &color) {
+void Container::setBackgroundColor(const sf::Color &color) {
     rect.setFillColor(color);
 }

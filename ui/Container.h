@@ -8,9 +8,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <vector>
 #include "Node.h"
-
-namespace gui
-{
+#include <SFML/Graphics.hpp>
 
 class Container: public Node{
 public:
@@ -22,7 +20,27 @@ public:
         WRAP_CONTENT,
         FIXED
     };
+private:
+    sf::RenderWindow* window;
+    Alignment vAlignment = Alignment::TOP;
+    Alignment hAlignment = Alignment::LEFT;
+    SizeMode sizeMode = SizeMode::WRAP_CONTENT;
+    std::vector<Node*> children;
+    sf::RectangleShape rect;
+    //relative to parent
+    bool isCenterVertical = false;
+    bool isCenterHorizontal = false;
+    bool isTopInParent = false;
+    bool isBottomInParent = false;
 
+    float paddingTop = 0;
+    float paddingBottom = 0;
+    float paddingLeft = 0;
+    float paddingRight = 0;
+    float childSpacing = 5;
+protected:
+    virtual void calculateChildrenPositions();
+public:
     Container() = default;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     virtual float getHeight() const;
@@ -50,31 +68,9 @@ public:
     void setPadding(float padding);
     void setPadding(float top_bottom, float left_right);
     void setPadding(float top, float right, float bottom, float left);
-private:
-    sf::RenderWindow* window;
-    Alignment vAlignment = Alignment::TOP;
-    Alignment hAlignment = Alignment::LEFT;
-    SizeMode sizeMode = SizeMode::WRAP_CONTENT;
-    std::vector<Node*> children;
-    sf::RectangleShape rect;
-    //relative to parent
-    bool isCenterVertical = false;
-    bool isCenterHorizontal = false;
-    bool isTopInParent = false;
-    bool isBottomInParent = false;
-    void calculateChildrenPositions();
-
-    float paddingTop = 0;
-    float paddingBottom = 0;
-    float paddingLeft = 0;
-    float paddingRight = 0;
-
-    float childSpacing = 10;
+    void setChildSpacing(float spacing);
 
 };
-
-
-}
 
 
 #endif //UI_CONTAINER_H

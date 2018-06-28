@@ -1,87 +1,34 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "ui/Container.h"
-#include "ui/Utils.h"
-#include "ui/elements/TextNode.h"
-#include "ui/elements/Button.h"
+#include "ui/MenuList.h"
 
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(960, 640), "XEP GOVNO");
+    sf::RenderWindow window(sf::VideoMode(960, 640), "TEST");
 
-    gui::Container container;
-    container.setBackgroundColor(sf::Color::Red);
-    container.setWindow(&window);
+    MenuList menuList;
+    menuList.setBackgroundColor(sf::Color::Black);
+    menuList.setWindow(&window);
+    menuList.setBottomInparent(true);
+    menuList.setCenterHorizontal(true);
+    menuList.setPadding(100, 0);
+    menuList.setChildSpacing(20);
 
-    container.setPosition(100, 100);
-    container.setSizeMode(gui::Container::SizeMode::WRAP_CONTENT);
+    menuList.add("START");
+    menuList.add("OPTIONS");
+    menuList.add("EXIT");
 
-    TextNode textNode;
-    textNode.setText("TES VI");
-    textNode.setMarginBottom(40);
-
-    container.add(&textNode);
-
-    gui::Container title;
-    title.setBackgroundColor(sf::Color::Black);
-    title.setSize(100, 50);
-    title.setMarginBottom(30);
-
-    container.add(&title);
-
-    gui::Container child;
-    child.setSize({100, 100});
-    child.setBackgroundColor(sf::Color::Green);
-    child.setSizeMode(gui::Container::SizeMode::FIXED);
-    container.add(&child);
-
-    gui::Container child2;
-    child2.setSize({100, 100});
-    child2.setBackgroundColor(sf::Color::Yellow);
-    child2.setSizeMode(gui::Container::SizeMode::FIXED);
-    container.add(&child2);
-
-    container.setAlignment(gui::Container::Alignment::CENTER,
-                           gui::Container::Alignment::CENTER);
-    container.setCenterHorizontal(true);
-    container.setBottomInparent(true);
-    container.setPadding(20, 10);
-
-    sf::RectangleShape line({window.getSize().x, 1});
-    line.setFillColor(sf::Color::Black);
-    line.setPosition(0,window.getSize().y / 2);
-
-
-    sf::RectangleShape vLine({1, window.getSize().y});
-    vLine.setFillColor(sf::Color::Black);
-    vLine.setPosition(window.getSize().x / 2, 0);
-
-    Button button("Button");
-    button.setPosition(100, 100);
-    button.setPadding(10);
-    button.setText("XEPPSPDSDA");
-    button.setBackgroundColor(sf::Color::Black);
-    button.setTextColor(sf::Color::White);
-
-    container.add(&button);
-
-  /*  gui::Container child3;
-    child3.setSize({100, 150});
-    child3.setBackgroundColor(sf::Color::Black);
-    container.add(&child3);*/
-
-    while (window.isOpen()){
+    while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed){
+            if (event.type == sf::Event::Closed) {
                 window.close();
             }
+            menuList.handleInput(event);
         }
-        window.clear(sf::Color::White);
-        window.draw(container);
-        window.draw(line);
-        window.draw(vLine);
-        window.draw(button);
+        window.clear(sf::Color::Black);
+        window.draw(menuList);
         window.display();
     }
 

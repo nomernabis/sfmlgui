@@ -2,6 +2,7 @@
 // Created by pavel_cpp on 18.06.18.
 //
 
+#include <iostream>
 #include "Button.h"
 
 sf::Vector2f Button::getPosition() {
@@ -48,6 +49,7 @@ void Button::setPosition(float x, float y) {
     sf::Vector2f positon{x, y};
     sf::Vector2f noPadding = positon - textNode.getLocalBounds();
     textNode.setPosition(noPadding.x + paddingLeft, noPadding.y + paddingTop);
+    std::cout << x << ", " << y << "\n";
     rect.setPosition({x, y});
 }
 
@@ -78,6 +80,4 @@ void Button::setPadding(float top, float right, float bottom, float left) {
 void Button::resize() {
     rect.setSize({paddingLeft + paddingRight + textNode.getWidth(),
     paddingTop + paddingBottom + textNode.getHeight()});
-    textNode.setPosition(rect.getPosition().x + paddingLeft - textNode.getLocalBounds().x,
-                         rect.getPosition().y + paddingTop - textNode.getLocalBounds().y);
 }

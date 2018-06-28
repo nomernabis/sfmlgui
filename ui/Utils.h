@@ -9,13 +9,10 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-namespace gui{
-    class Utils {
-    public:
-        static sf::Vector2f getCenterOf(sf::RenderWindow*);
-        static float getBottomOf(sf::RenderTarget*);
-    };
-}
-
+class Utils {
+public:
+    static sf::Vector2f getCenterOf(sf::RenderWindow*);
+    static float getBottomOf(sf::RenderTarget*);
+};
 
 #endif //UI_UTILS_H
