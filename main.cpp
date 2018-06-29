@@ -19,6 +19,14 @@ int main() {
     menuList.add("OPTIONS");
     menuList.add("EXIT");
 
+    TextNode gameTitle;
+    gameTitle.setMarginTop(150);
+    gameTitle.setWindow(&window);
+    gameTitle.setFontSize(40);
+    gameTitle.setText("PACMAN");
+    gameTitle.setTextColor(sf::Color::White);
+    gameTitle.setCenterHorizontal(true);
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -28,6 +36,7 @@ int main() {
             menuList.handleInput(event);
         }
         window.clear(sf::Color::Black);
+        window.draw(gameTitle);
         window.draw(menuList);
         window.display();
     }

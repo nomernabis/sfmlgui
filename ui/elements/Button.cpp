@@ -18,7 +18,7 @@ void Button::setBackgroundColor(sf::Color color) {
 }
 
 void Button::setTextColor(sf::Color color) {
-    textNode.setColor(color);
+    textNode.setTextColor(color);
 }
 
 void Button::setFixedSize(bool isFixedSize) {

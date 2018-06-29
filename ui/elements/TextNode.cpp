@@ -4,15 +4,25 @@
 
 #include <iostream>
 #include "TextNode.h"
+#include "../Utils.h"
 
 
 TextNode::TextNode() {
     init();
 }
 
+void TextNode::setWindow(sf::RenderWindow* window) {
+    this->window = window;
+}
+
 TextNode::TextNode(std::string str) {
     init();
     text.setString(str);
+}
+
+void TextNode::setMarginTop(float marginTop) {
+    Node::setMarginTop(marginTop);
+    text.setPosition(getPosition().x, marginTop);
 }
 
 void TextNode::init() {
@@ -54,7 +64,17 @@ void TextNode::setFont(std::string fontName) {
     text.setFont(font);
 }
 
-void TextNode::setColor(sf::Color& c) {
+void TextNode::setCenterHorizontal(bool value) {
+    this->isCenterHorizontal = value;
+    float centerX = Utils::getCenterOf(window).x;
+    setPosition(centerX - getWidth() / 2, getPosition().y);
+}
+
+void TextNode::setFontSize(int size) {
+    text.setCharacterSize(size);
+}
+
+void TextNode::setTextColor(const sf::Color& c) {
     color = c;
     text.setFillColor(color);
 }
@@ -69,4 +89,10 @@ void TextNode::setPosition(sf::Vector2f pos) {
 
 sf::Vector2f TextNode::getLocalBounds() {
     return {text.getLocalBounds().left, text.getLocalBounds().top};
+}
+
+void TextNode::setCenterInParent(bool value) {
+    isCenterInParent = value;
+    sf::Vector2f center = Utils::getCenterOf(window);
+    setPosition(center.x - getWidth() / 2, center.y  - getHeight() / 2);
 }
