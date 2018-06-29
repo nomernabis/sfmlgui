@@ -32,7 +32,7 @@ Button* MenuList::createButton(std::string title) {
 void MenuList::calculateChildrenPositions() {
     Container::calculateChildrenPositions();
     Button* button;
-    if(menuItems.size() != 0){
+    if(!menuItems.empty()){
         button = menuItems.at(currentIndex);
         float left = button->getPosition().x;
         float centerY = button->getPosition().y + button->getHeight() / 2;
@@ -44,10 +44,20 @@ void MenuList::calculateChildrenPositions() {
 void MenuList::handleInput(sf::Event &event) {
     if(event.type == sf::Event::KeyPressed){
         if(event.key.code == sf::Keyboard::Down){
-
+            if(!menuItems.empty()){
+                currentIndex++;
+                currentIndex = currentIndex % menuItems.size();
+                calculateChildrenPositions();
+            }
         }
         if(event.key.code == sf::Keyboard::Up){
-
+           if(!menuItems.empty()){
+               currentIndex--;
+               if(currentIndex < 0){
+                   currentIndex = menuItems.size() - 1;
+               }
+               calculateChildrenPositions();
+           }
         }
     }
 }
