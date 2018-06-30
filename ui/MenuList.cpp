@@ -14,8 +14,9 @@ MenuList::~MenuList() {
         delete button;
     }
 }
-void MenuList::add(std::string title) {
+void MenuList::add(std::string title, std::function<void()> const& lambda) {
     titles.push_back(title);
+    actions.push_back(lambda);
     Button* button = createButton(title);
     menuItems.push_back(button);
     Container::add(button);
@@ -58,6 +59,13 @@ void MenuList::handleInput(sf::Event &event) {
                }
                calculateChildrenPositions();
            }
+        }
+
+        if(event.key.code == sf::Keyboard::Return){
+            if(!menuItems.empty()){
+                std::function<void()> action = actions.at(currentIndex);
+                action();
+            }
         }
     }
 }
